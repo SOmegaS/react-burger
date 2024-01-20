@@ -1,0 +1,14 @@
+.details {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.number {
+    text-shadow: 0 4px 32px rgba(51, 51, 255, 0.50), 0 0 8px rgba(51, 51, 255, 0.25), 0 0 16px rgba(51, 51, 255, 0.25);
+    height: 120px;
+}
+
+.text_bottom {
+    color: #8585AD;
+}

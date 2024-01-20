@@ -1,0 +1,6 @@
+.section {
+    color: #F2F2F3;
+    gap:40px;
+    display: flex;
+    justify-content: center;
+}

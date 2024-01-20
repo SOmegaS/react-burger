@@ -1,0 +1,24 @@
+.details {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.image {
+    width: 480px;
+    margin: 0 0 16px 0;
+}
+
+.info {
+    display: flex;
+    margin: 0;
+    padding: 32px 0 0 0;
+    gap: 20px;
+}
+
+.info_item {
+    display: flex;
+    color: #8585AD;
+    align-items: center;
+    flex-direction: column;
+}

@@ -1,0 +1,59 @@
+.section {
+    width: 100%;
+    align-items: center;
+    margin-bottom: 52px;
+    flex-direction: column;
+    max-width: 600px;
+    display: flex;
+}
+
+.bottom {
+    justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    max-width: 568px;
+}
+
+.price_section {
+    align-items: center;
+    display: flex;
+}
+
+.elements {
+    gap: 16px;
+    flex-direction: column;
+    display: flex;
+    align-self: flex-end;
+    margin: 91px 0 44px;
+}
+
+.middle_item {
+    margin: 0 8px 0 0;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+}
+
+.scrollbar {
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 464px;
+    margin: 0;
+    display: flex;
+    padding: 0 0 0 0;
+    gap: 16px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.border_item {
+    margin: 0 0 0 32px;
+}
