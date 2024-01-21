@@ -15,7 +15,7 @@ function Main({ingredients, modal}) {
 
 Main.propTypes = {
     ingredients: PropTypes.array,
-    modal: PropTypes.element,
+    modal: PropTypes.object,
 }
 
 export default Main;

@@ -55,7 +55,7 @@ function BurgerIngredients({ingredients, modal}) {
 
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.array,
-    modal: PropTypes.element,
+    modal: PropTypes.object,
 }
 
 export default BurgerIngredients;

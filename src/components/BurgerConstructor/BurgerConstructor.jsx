@@ -10,7 +10,9 @@ function BurgerConstructor({ingredients, modal}) {
     };
 
     let bun = ingredients[0];
-    ingredients = ingredients.slice(1);
+    ingredients = ingredients.slice(1).filter((elem) => {
+        return elem.type !== "bun"
+    });
     let price = 2 * parseInt(bun.price);
 
     return (
@@ -69,7 +71,7 @@ function BurgerConstructor({ingredients, modal}) {
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.array,
-    modal: PropTypes.element,
+    modal: PropTypes.object,
 }
 
 export default BurgerConstructor;

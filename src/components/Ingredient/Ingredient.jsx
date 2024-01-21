@@ -27,7 +27,7 @@ const Ingredient = ({ingredient, modal}) => {
 
 Ingredient.propTypes = {
     ingredients: PropTypes.array,
-    modal: PropTypes.element,
+    modal: PropTypes.object,
 }
 
 export default Ingredient;

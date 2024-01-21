@@ -1,14 +1,15 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import MainSection from "../Main/Main";
 import Modal from "../Modal/Modal";
+import {useModal} from "../../hooks/useModal";
 
 const url = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
     const [ingredients, setIngredients] = React.useState([]);
     const [isDataGot, setIsDataGot] = React.useState(false);
-    const modal = CreateModal();
+    const modal = useModal();
 
     useEffect(() => {
         fetch(url)
@@ -36,30 +37,6 @@ function App() {
             {isDataGot && modal.getIsOpen && (<Modal title={modal.getTitle} modal={modal}></Modal>)}
         </>
     );
-}
-
-function CreateModal() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState(<></>);
-
-    const open = useCallback((header, content) => {
-        setIsOpen(true);
-        setContent(content);
-        setTitle(header);
-    }, []);
-
-    const close = useCallback(() => {
-        setIsOpen(false);
-    }, []);
-
-    return {
-        getIsOpen: isOpen,
-        getContent: content,
-        getTitle: title,
-        open,
-        close,
-    };
 }
 
 export default App;

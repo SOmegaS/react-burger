@@ -43,7 +43,7 @@ function Modal({title, modal}) {
 
 Modal.propTypes = {
     title: PropTypes.string,
-    modal: PropTypes.element,
+    modal: PropTypes.object,
 }
 
 export default Modal;
