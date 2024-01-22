@@ -1,0 +1,33 @@
+.section {
+    display: flex;
+    max-width: 600px;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 0 52px 0;
+}
+
+.choose_block {
+    column-gap: 24px;
+    padding: 0 16px 0;
+    row-gap: 30px;
+    grid-template-columns: repeat(2, 272px);
+    display: grid;
+}
+
+.scrollbar {
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.tabs {
+    display: flex;
+}

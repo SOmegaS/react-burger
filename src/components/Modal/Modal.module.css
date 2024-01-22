@@ -1,0 +1,27 @@
+.modal {
+    width: 100%;
+    color: #F2F2F3;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    z-index: 3;
+    max-width: 640px;
+    border: 1px solid rgba(76, 76, 255, 0.20);
+    transform: translate(-50%, -50%);
+    position: fixed;
+    padding: 40px 40px 60px;
+    top: 50%;
+    left: 50%;
+}
+
+.header_group {
+    align-items: center;
+    display: flex;
+    gap: 36px;
+}
+
+.header {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    height: 64px;
+}

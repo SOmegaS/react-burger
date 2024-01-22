@@ -1,0 +1,17 @@
+.ingredient {
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    height: 208px;
+    align-items: center;
+}
+
+.image {
+    padding: 0 0 8px 0;
+}
+
+.price {
+    padding: 0 0 8px 0;
+    display: flex;
+    justify-content: center;
+}
