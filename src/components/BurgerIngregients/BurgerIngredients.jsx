@@ -3,13 +3,32 @@ import PropTypes from 'prop-types';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from "../Ingredient/Ingredient";
 import styles from './BurgerIngredients.module.css';
+import {useSelector} from "react-redux";
 
-function BurgerIngredients({ingredients, modal}) {
+function BurgerIngredients({modal}) {
     const [current, setCurrent] = React.useState('bun')
 
-    const bunArray = ingredients.filter((item) => item.type === 'bun');
-    const sauceArray = ingredients.filter((item) => item.type === 'sauce');
-    const mainArray = ingredients.filter((item) => item.type === 'main');
+    const ingrList = useSelector(store => store.mainReducer.fetchedIngredients);
+    const bunArray = ingrList.filter((item) => item.type === 'bun');
+    const sauceArray = ingrList.filter((item) => item.type === 'sauce');
+    const mainArray = ingrList.filter((item) => item.type === 'main');
+
+    const scrollWindow = document.getElementById('scroll_window');
+    const buns = document.getElementById('bun');
+    const sauces = document.getElementById('sauce');
+    const onScroll = (event) => {
+        const distBuns = scrollWindow.getBoundingClientRect().top - buns.getBoundingClientRect().top;
+        const distSauces = scrollWindow.getBoundingClientRect().top - sauces.getBoundingClientRect().top;
+        if (0 < distBuns) {
+            setCurrent("bun");
+            return;
+        }
+        if (0 < distSauces) {
+            setCurrent("sauce");
+            return;
+        }
+        setCurrent("main");
+    }
 
     return (
         <section className={styles.section}>
@@ -21,8 +40,8 @@ function BurgerIngredients({ingredients, modal}) {
                 <Tab value="main" active={current === 'main'} onClick={setCurrent}>Начинки</Tab>
             </div>
 
-            <div className={styles.scrollbar}>
-                <p className="text text_type_main-medium pt-10 pb-6">Булки</p>
+            <div className={styles.scrollbar} onScroll={onScroll} id="scroll_window">
+                <p className="text text_type_main-medium pt-10 pb-6" id="bun">Булки</p>
                 <div className={styles.choose_block}>
                     {
                         bunArray.map((elem) => {
@@ -31,7 +50,7 @@ function BurgerIngredients({ingredients, modal}) {
                     }
                 </div>
 
-                <p className="text text_type_main-medium pt-10 pb-6">Соусы</p>
+                <p className="text text_type_main-medium pt-10 pb-6" id="sauce">Соусы</p>
                 <div className={styles.choose_block}>
                     {
                         sauceArray.map((elem) => {
@@ -40,7 +59,7 @@ function BurgerIngredients({ingredients, modal}) {
                     }
                 </div>
 
-                <p className="text text_type_main-medium pt-10 pb-6">Начинки</p>
+                <p className="text text_type_main-medium pt-10 pb-6" id="main">Начинки</p>
                 <div className={styles.choose_block}>
                     {
                         mainArray.map((elem) => {
@@ -54,7 +73,6 @@ function BurgerIngredients({ingredients, modal}) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.array,
     modal: PropTypes.object,
 }
 
