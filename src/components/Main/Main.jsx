@@ -10,8 +10,8 @@ function Main({ingredients, modal}) {
     return (
         <DndProvider backend={HTML5Backend}>
             <main className={styles.section}>
-                <BurgerIngredients ingredients={ingredients} modal={modal}/>
-                <BurgerConstructor ingredients={ingredients} modal={modal}/>
+                <BurgerIngredients modal={modal}/>
+                <BurgerConstructor modal={modal}/>
             </main>
         </DndProvider>
     );

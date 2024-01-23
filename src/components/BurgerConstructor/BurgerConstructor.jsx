@@ -69,9 +69,9 @@ function BurgerConstructor({modal}) {
 
                 <ul className={styles.scrollbar}>
                     {
-                        ingrs.map((elem, i) => {
+                        ingrs.map((elem, ind) => {
                             price += parseInt(elem.price);
-                            return <ConstructorIngredient elem={elem} index={i} key={elem.currentId}/>;
+                            return <ConstructorIngredient elem={elem} index={ind} key={elem.currentId}/>;
                         })
                     }
                 </ul>

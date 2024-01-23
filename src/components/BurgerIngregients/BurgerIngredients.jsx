@@ -14,20 +14,22 @@ function BurgerIngredients({modal}) {
     const mainArray = ingrList.filter((item) => item.type === 'main');
 
     const scrollWindow = document.getElementById('scroll_window');
-    const buns = document.getElementById('bun');
+    const mains = document.getElementById('main');
     const sauces = document.getElementById('sauce');
     const onScroll = (event) => {
-        const distBuns = scrollWindow.getBoundingClientRect().top - buns.getBoundingClientRect().top;
+        const distMain = scrollWindow.getBoundingClientRect().top - mains.getBoundingClientRect().top;
         const distSauces = scrollWindow.getBoundingClientRect().top - sauces.getBoundingClientRect().top;
-        if (0 < distBuns) {
-            setCurrent("bun");
+        // console.log("bun", distMain);
+        // console.log("sauce", distSauces);
+        if (0 < distMain) {
+            setCurrent("main");
             return;
         }
         if (0 < distSauces) {
             setCurrent("sauce");
             return;
         }
-        setCurrent("main");
+        setCurrent("bun");
     }
 
     return (

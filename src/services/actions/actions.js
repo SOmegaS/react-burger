@@ -1,35 +1,26 @@
 import {GET_INGR_LIST, REMOVE_ALL, SET_ORDER_NUMBER} from ".";
+import {checkResponse} from "../../utils/utils";
 
-const ingredientsUrl = "https://norma.nomoreparties.space/api/ingredients";
-const orderUrl = "https://norma.nomoreparties.space/api/orders";
+const url = "https://norma.nomoreparties.space/api";
+const ingredientsEndpoint = "/ingredients";
+const orderEndpoint = "/orders";
 
 export function getIngredients() {
-    return function(dispatch) {
-        fetch(ingredientsUrl)
+    return function (dispatch) {
+        checkResponse(fetch(url + ingredientsEndpoint))
             .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error ${res.status}`);
-            })
-            .then((res) => {
-                if (res.success) {
-                    dispatch({
-                        type: GET_INGR_LIST,
-                        data: res.data,
-                        isFetched: true,
-                    });
-                } else {
-                    return Promise.reject(`Data error`);
-                }
-            })
-            .catch(console.error);
+                dispatch({
+                    type: GET_INGR_LIST,
+                    data: res.data,
+                    isFetched: true,
+                });
+            });
     }
 }
 
 export function createOrder(order) {
-    return function(dispatch) {
-        fetch(orderUrl, {
+    return function (dispatch) {
+        checkResponse(fetch(url + orderEndpoint, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -37,28 +28,15 @@ export function createOrder(order) {
             body: JSON.stringify({
                 ingredients: order.map((elem) => elem._id),
             }),
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
+        })).then((res) => {
+            dispatch({
+                type: SET_ORDER_NUMBER,
+                number: res.order.number,
+            });
+        }).then(() => {
+            dispatch({
+                type: REMOVE_ALL,
             })
-            .then((res) => {
-                if (res.success) {
-                    dispatch({
-                        type: SET_ORDER_NUMBER,
-                        number: res.order.number,
-                    });
-                } else {
-                    return Promise.reject(`Data error`);
-                }
-            })
-            .then(() => {
-                dispatch({
-                    type: REMOVE_ALL,
-                })
-            })
-            .catch(console.error);
+        });
     }
 }

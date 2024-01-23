@@ -28,9 +28,11 @@ const ConstructorIngredient = ({elem, index}) => {
     const [, drop] = useDrop({
         accept: 'constructorElement',
         hover: (elem, mon) => {
+            console.log("AAAAAAAAAAAAAAAAAA");
             const rect = ref.current?.getBoundingClientRect();
             const center = (rect.bottom - rect.top) / 2;
             const client = mon.getClientOffset().y - rect.top;
+            console.log(elem.ind);
             if ((elem.ind > index && client < center) || (elem.ind < index && client > center)) {
                 moveItem(elem.ind, index);
                 elem.ind = index;
