@@ -28,13 +28,6 @@
     margin: 91px 0 44px;
 }
 
-.middle_item {
-    margin: 0 8px 0 0;
-    align-items: center;
-    gap: 8px;
-    display: flex;
-}
-
 .scrollbar {
     flex-direction: column;
     overflow-y: scroll;

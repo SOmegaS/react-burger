@@ -3,37 +3,21 @@ import AppHeader from "../AppHeader/AppHeader";
 import MainSection from "../Main/Main";
 import Modal from "../Modal/Modal";
 import {useModal} from "../../hooks/useModal";
-
-const url = "https://norma.nomoreparties.space/api/ingredients";
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../../services/actions/actions";
 
 function App() {
-    const [ingredients, setIngredients] = React.useState([]);
-    const [isDataGot, setIsDataGot] = React.useState(false);
     const modal = useModal();
-
+    const isDataGot = useSelector(store =>  store.mainReducer.isFetched);
+    const dispatch = useDispatch();
     useEffect(() => {
-        fetch(url)
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error ${res.status}`);
-            })
-            .then((res) => {
-                if (res.success) {
-                    setIsDataGot(true);
-                    setIngredients(res.data);
-                } else {
-                    return Promise.reject(`Data error`);
-                }
-            })
-            .catch(console.error);
-    }, []);
+        dispatch(getIngredients());
+    }, [dispatch]);
 
     return (
         <>
             <AppHeader/>
-            {isDataGot && (<MainSection ingredients={ingredients} modal={modal}/>)}
+            {isDataGot && (<MainSection modal={modal}/>)}
             {isDataGot && modal.getIsOpen && (<Modal title={modal.getTitle} modal={modal}></Modal>)}
         </>
     );

@@ -1,24 +1,63 @@
-import {Button, CurrencyIcon, ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon, ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import PropTypes from 'prop-types';
 import OrderDetails from "../OrderDetails/OrderDetails";
 import styles from './BurgerConstructor.module.css';
+import {useDispatch, useSelector} from "react-redux";
+import {createOrder} from "../../services/actions/actions";
+import {ADD_INGR, REMOVE_INGR} from "../../services/actions";
+import {useDrop} from "react-dnd";
+import ConstructorIngredient from "../ConstructorIngredient/ConstructorIngredient";
 
-function BurgerConstructor({ingredients, modal}) {
+function BurgerConstructor({modal}) {
+    const dispatch = useDispatch();
+    let ingrList = useSelector(store => store.mainReducer.ingredientsConstructorList);
+
     const onClick = () => {
+        dispatch(createOrder(ingrList));
         modal.open('', <OrderDetails/>);
     };
 
-    let bun = ingredients[0];
-    ingredients = ingredients.slice(1).filter((elem) => {
+    const onGragNDrop = (item) => {
+        if (item.type === 'bun') {
+            const bun = ingrList.find((elem) => elem.type === 'bun');
+            console.log(ingrList);
+            console.log(bun);
+            if (bun) {
+                dispatch({
+                    type: REMOVE_INGR,
+                    item: bun,
+                });
+            }
+        }
+        dispatch({
+            type: ADD_INGR,
+            item: item,
+            id: Date.now(),
+        });
+    };
+
+    const [, dropTarget] = useDrop({
+        accept: 'constructorItem',
+        drop(item) {
+            onGragNDrop(item);
+        },
+    });
+
+    const bun = (ingrList.find((elem) => elem.type === 'bun'));
+    // let bun = ingrList[0];
+    const ingrs = ingrList.filter((elem) => {
         return elem.type !== "bun"
     });
-    let price = 2 * parseInt(bun.price);
+    let price = 0;
+    if (bun) {
+        price = 2 * bun.price;
+    }
 
     return (
-        <section className={styles.section}>
+        <section ref={dropTarget} className={styles.section}>
             <div className={styles.elements}>
-                <div className={styles.border_item}>
+                {bun && <div className={styles.border_item}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -26,28 +65,18 @@ function BurgerConstructor({ingredients, modal}) {
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </div>
+                </div>}
 
                 <ul className={styles.scrollbar}>
                     {
-                        ingredients.map((elem) => {
+                        ingrs.map((elem, ind) => {
                             price += parseInt(elem.price);
-                            return (
-                                <li className={styles.middle_item} key={elem._id}>
-                                    <DragIcon type="primary"/>
-                                    <ConstructorElement
-                                        isLocked={false}
-                                        text={elem.name}
-                                        price={elem.price}
-                                        thumbnail={elem.image}
-                                    />
-                                </li>
-                            );
+                            return <ConstructorIngredient elem={elem} index={ind} key={elem.currentId}/>;
                         })
                     }
                 </ul>
 
-                <div className={styles.border_item}>
+                {bun && <div className={styles.border_item}>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -55,7 +84,7 @@ function BurgerConstructor({ingredients, modal}) {
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </div>
+                </div>}
             </div>
 
             <div className={styles.bottom}>
@@ -63,14 +92,13 @@ function BurgerConstructor({ingredients, modal}) {
                     <span className="text text_type_digits-medium">{price}</span>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" onClick={onClick} size="medium" type="primary">Оформить заказ</Button>
+                <Button htmlType="button" onClick={onClick} disabled={price === 0} size="medium" type="primary">Оформить заказ</Button>
             </div>
         </section>
     );
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.array,
     modal: PropTypes.object,
 }
 
