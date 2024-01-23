@@ -8,6 +8,7 @@ import {
     REMOVE_INGR_DETAIL,
     SET_ORDER_NUMBER,
 } from "../actions";
+import {hover} from "@testing-library/user-event/dist/hover";
 
 export const reducer = (state, action) => {
     if (!state) {
@@ -57,15 +58,29 @@ export const reducer = (state, action) => {
                 }),
             };
         case DRAG_INGR:
-            const ingr = state.ingredientsConstructorList[action.dragIndex];
+            // const first = state.ingredientsConstructorList.slice(0, action.dragIndex);
+            // const second = state.ingredientsConstructorList.slice(action.dragIndex + 1, action.hoverIndex);
+            // const third = [ingr];
+            // const fourth = state.ingredientsConstructorList.slice(action.hoverIndex, state.ingredientsConstructorList.length);
+            // const ingrList = first.concat(second).concat(third).concat(fourth);
+            // console.log(first);
+            // .slice(0, action.dragIndex)
+            // .concat(state.ingredientsConstructorList.slice(action.dragIndex + 1))
+            // .slice(0, action.hoverIndex)
+            // .concat(ingr)
+            // .concat(state.ingredientsConstructorList.slice(action.hoverIndex));
+
+            const ingrList = state.ingredientsConstructorList.slice();
+            const ingr = ingrList[action.dragIndex];
+            for (let i = action.dragIndex; i < action.hoverIndex; i += 1) {
+                ingrList[i] = ingrList[i + 1];
+            }
+            ingrList[action.hoverIndex] = ingr;
+
             return {
                 ...state,
-                ingredientsConstructorList: state.ingredientsConstructorList
-                    .filter((elem, index) => {
-                        return index !== action.dragIndex;
-                    })
-                    .splice(action.hoverIndex, 0, ingr),
-            };
+                ingredientsConstructorList: ingrList,
+            }
         case REMOVE_ALL:
             return {
                 ...state,
